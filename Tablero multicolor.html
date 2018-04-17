@@ -73,7 +73,7 @@
         }
 
         function AddColor() {
-            nuevoColor = "rgb(" + 255 + "," + 255 + "," + 255 + ")";
+            nuevoColor = "rgb(" + Aleatorio(255) + "," + Aleatorio(255) + "," + Aleatorio(255) + ")";
             colores.push(nuevoColor);
             document.getElementById('cajaTest').style["background-color"] = nuevoColor;
             document.getElementById('cajaTest').innerHTML = colores.length;
