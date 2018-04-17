@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Tablero multicolor</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css' />
+    <style>
+        .caja {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: solid 1px;
+        }
+    </style>
+
+    <script type='text/javascript'>
+
+        var items = 0;
+        var iColor = -1, color;
+        var recorrido = 0;
+        var anim;
+        var colores = new Array;
+
+        function Aleatorio(long) {
+            var numero = Math.random();
+            numero = Math.ceil(numero * long);
+            return (numero - 1);
+        }
+
+        function Pintar() {
+            var columnas = document.getElementById('columnas').value;
+            var filas = document.getElementById('filas').value;
+            var contenedor = document.getElementById('contenedor');
+            items = 0;
+
+            contenedor.innerHTML = "";
+
+            for (let i = 0; i < filas; i++) {
+                contenedor.innerHTML += '<div id="fila' + i + '" style="clear:both;"></div';
+
+                var columna = document.getElementById('fila' + i.toString());
+
+                for (let j = 0; j < columnas; j++) {
+
+                    columna.innerHTML += '<div id="' + Aleatorio(1000) + '" class="caja" style=" background-color:' + GrabColor() + '" onclick="cajaAlert(this)"></div>';
+                    items++;
+
+
+
+                }
+                if ((columnas % colores.length) == 0) {
+                    GrabColor(); console.log("salto un color");
+                }
+            }
+
+            console.log(columnas + " " + colores.length);
+
+            //Start();
+        }
+
+        function Swap() {
+            if (recorrido < items) {
+                document.getElementById(recorrido).style["visibility"] = "visible";
+                recorrido++;
+            }
+            else {
+                clearInterval(anim);
+            }
+        }
+
+        function Start() {
+            anim = setInterval(Swap, 100);
+        }
+
+        function AddColor() {
+            nuevoColor = "rgb(" + 255 + "," + 255 + "," + 255 + ")";
+            colores.push(nuevoColor);
+            document.getElementById('cajaTest').style["background-color"] = nuevoColor;
+            document.getElementById('cajaTest').innerHTML = colores.length;
+        }
+
+        function GrabColor() {
+
+            iColor++;
+            if (iColor == colores.length) iColor = 0;
+            return colores[iColor];
+        }
+
+        function cajaAlert(caja){
+            alert(caja.id);
+        }
+
+        function Aleatorio(long) {
+            var numero = Math.random();
+            numero = Math.ceil(numero * long);
+            return numero;
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <center>
+        fila:
+        <input type="text" id="filas">
+        <br> col:
+        <input type="text" id="columnas">
+        <br>
+        <input type="button" value="Ejecutar" onclick="Pintar()">
+        <input type="button" value="Añadir color" onclick="AddColor()">
+        <div style="width:20px; height:20px; border: 1px solid;" id="cajaTest"></div>
+        <br>
+        <br>
+        <div id="contenedor"></div>
+
+    </center>
+</body>
+
+</html>
